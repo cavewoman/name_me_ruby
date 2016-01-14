@@ -12,4 +12,15 @@ describe Combinatorialist do
     expect(Combinatorialist.new({options: []})).not_to be_valid
   end
 
+  describe '#execute' do
+    
+    it 'returns combinations' do
+      combiner = Combinatorialist.new({options: ['a', 'b', 'c']})
+      combinations = ["a", "b", "c", "ab", "ac", "ba", "bc", "ca", "cb", "abc", "acb", "bac", "bca", "cab", "cba"]
+      expect(combiner.execute).to eq(true)
+      expect(combiner.combinations).to eql(combinations)
+    end
+
+  end
+
 end
