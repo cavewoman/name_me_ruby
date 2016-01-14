@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>Refs</title>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+</head>
+<body>
+
+  <!-- container node -->
+  <div id="adder"></div>
+
+  <script src="http://fb.me/react-0.11.1.js"></script>
+  <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script type="text/jsx">
+  /** @jsx React.DOM */
+
+  var MessageBox = React.createClass({
+
+    submit: function(e) {
+      var params = { options: this.state.messages };
+      $.ajax({
+        url: '/combinations',
+        dataType: 'json',
+        type: 'GET',
+        data: params,
+        success: function(data) {
+          this.setState({
+            combinations: data
+          });
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.error('/combinations', status, err.toString());
+        }.bind(this)
+      });
+    },
+
+    handleAdd: function(e) {
+      var newMessage = this.refs.newMessage.getDOMNode().value;
+      var newMessages = this.state.messages.concat([newMessage]);
+      this.setState({
+        messages: newMessages
+      });
+    },
+
+    handleDelete: function(item) {
+      var newMessages = _.without(this.state.messages, item);
+      this.setState({
+        messages: newMessages
+      });
+    },
+
+    getInitialState: function() {
+      return {
+        isVisible: true,
+        messages: [],
+        combinations: []
+      }
+    },
+
+    render: function() {
+
+      var inlineStyles = {
+        display: this.state.isVisible ? 'block' : 'none'
+      };
+
+      var messages = this.state.messages.map(function(message) {
+        return <SubMessage message={message} onDelete={this.handleDelete} />;
+      }.bind(this));
+
+      if (this.state.combinations.length > 0) {
+        var results = this.state.combinations.map(function(option) {
+          return <li>{ option }</li>
+        });
+        return (
+          <div className="container jumbotron" style={inlineStyles}>
+            <h2>Your Name Options</h2>
+            <ul>
+              { results }
+            </ul>
+          </div>
+        );
+      
+      } else {
+        return (
+          <div className="container jumbotron" style={inlineStyles}>
+            <h2>Hello, World</h2>
+            <input ref="newMessage" type="text" />
+            <button className="btn btn-primary" onClick={this.handleAdd}>Add</button>
+            <button className="btn btn-primary" onClick={this.submit}>Submit</button>
+            { messages }
+          </div>
+        );
+      }
+    }
+  });
+
+  var SubMessage = React.createClass({
+
+    handleDelete: function (e) {
+      this.props.onDelete(this.props.message);
+    },
+
+    propTypes: {
+      message: React.PropTypes.string.isRequired
+    },
+
+    getDefaultProps: function () {
+      return {
+        message: 'Its good to see you'
+      }
+    },
+
+    render: function() {
+      return (
+        <div>
+          {this.props.message}
+          <button onClick={this.handleDelete} className="btn btn-danger">x</button>
+        </div>
+      );
+    }
+  });
+
+  var adderReactComponent = React.renderComponent(
+    <MessageBox />,
+    document.getElementById('adder')
+  );
+
+  </script>
+</body>
+</html>

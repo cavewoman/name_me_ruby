@@ -3,7 +3,7 @@ require 'rails_helper'
 
 describe 'Combinations API' do
 
-  describe 'POST /combinations' do
+  describe 'GET /combinations' do
 
     context 'when happy path conditions are met' do
 
@@ -13,7 +13,7 @@ describe 'Combinations API' do
       end
     
       it 'returns 200' do
-        post '/combinations', { options: [] }
+        get '/combinations', { options: [] }
         expect(response.code).to eq('200')
       end
 
@@ -22,7 +22,7 @@ describe 'Combinations API' do
     context 'when all is well' do
 
       it 'returns combinations' do
-        post '/combinations', { options: ['a', 'b'] }
+        get '/combinations', { options: ['a', 'b'] }
         expect(response.code).to eq('200')
         expect(JSON.parse(response.body)).to eq(['a','b','ab','ba'])
       end

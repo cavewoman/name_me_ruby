@@ -1,7 +1,7 @@
 class CombinationsController < ApplicationController
   respond_to :json
 
-  def create
+  def index
     @combiner = Combinatorialist.new(combination_params)
     if @combiner.valid?
       if @combiner.execute

@@ -22,6 +22,7 @@ class Combinatorialist
     (1..options.count).to_a.each do |num|
       options.permutation(num).to_a.each{|array| combinations << array.join }
     end
+    @combinations = @combinations.uniq
     true
   end
 
