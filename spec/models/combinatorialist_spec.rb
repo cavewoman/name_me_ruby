@@ -21,6 +21,17 @@ describe Combinatorialist do
       expect(combiner.combinations).to eql(combinations)
     end
 
+    context 'when there is more than one of the same letter in options' do
+      
+      it 'returns only the unique combinations' do
+        combiner = Combinatorialist.new({options: ['a', 'a', 'a']})
+        combinations = ['a', 'aa', 'aaa']
+        expect(combiner.execute).to eq(true)
+        expect(combiner.combinations).to eq(combinations)
+      end
+
+    end
+
   end
 
 end
