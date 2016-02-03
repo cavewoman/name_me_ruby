@@ -10,8 +10,8 @@
   <!-- container node -->
   <div id="adder"></div>
 
-  <script src="http://fb.me/react-0.11.1.js"></script>
-  <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
+  <script src="http://fb.me/react-0.13.0.js"></script>
+  <script src="http://fb.me/JSXTransformer-0.13.0.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
   <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
   <script type="text/jsx">
@@ -123,7 +123,7 @@
     }
   });
 
-  var adderReactComponent = React.renderComponent(
+  var adderReactComponent = React.render(
     <MessageBox />,
     document.getElementById('adder')
   );
