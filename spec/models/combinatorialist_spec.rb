@@ -34,4 +34,27 @@ describe Combinatorialist do
 
   end
 
+  describe '#only_real_words' do
+    
+    it 'returns real words from an array' do
+      combiner = Combinatorialist.new({options: ['a', 'c', 'r'], real: 'true'})
+      combinations = ['a','c', 'r', 'ac', 'ar', 'ca', 'cr', 'ra', 'rc', 'acr', 'arc', 'car', 'cra', 'rac', 'rca']
+      expect(combiner.only_real_words).to eq(['a', 'car', 'arc'])
+    end
+
+  end
+
+  describe '#real_word?' do
+      let(:combiner) { Combinatorialist.new({options: ['a', 'c', 'r'], real: 'true'}) }
+  
+    it 'returns true for real word' do
+      expect(combiner.real_word?('car')).to eq(true)
+    end
+
+    it 'returns false for fake word' do
+      expect(combiner.real_word?('sdfglj')).to eq(false)
+    end
+
+  end
+
 end

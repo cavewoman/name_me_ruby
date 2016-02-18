@@ -19,12 +19,22 @@ describe 'Combinations API' do
 
     end
 
-    context 'when all is well' do
+    context 'when all combinations are requested' do
 
       it 'returns combinations' do
         get '/combinations', { options: ['a', 'b'] }
         expect(response.code).to eq('200')
         expect(JSON.parse(response.body)).to eq(['a','b','ab','ba'])
+      end
+
+    end
+
+    context 'when only real words are requested' do
+      
+      it 'returns combinations that create real words' do
+        get '/combinations', { options: ['a', 'c', 'r'], real: 'true' }
+        expect(response.code).to eq('200')
+        expect(JSON.parse(response.body)).to eq(['a', 'car'])
       end
 
     end

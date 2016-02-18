@@ -17,7 +17,7 @@ class CombinationsController < ApplicationController
   private
 
   def combination_params
-    params.slice('options')
+    params.slice('options', 'real')
   end
 
 end
